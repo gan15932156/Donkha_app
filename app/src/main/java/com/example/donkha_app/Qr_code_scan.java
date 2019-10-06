@@ -32,7 +32,8 @@ public class Qr_code_scan extends AppCompatActivity implements ZXingScannerView.
             startActivity(new Intent(Qr_code_scan.this,DepositActivity.class));
         }
         else if(resultt.equals("withdraw")){
-
+            this.finishAffinity();
+            startActivity(new Intent(Qr_code_scan.this,WithdrawActivity.class));
         }
         else if(resultt.equals("tranfer_money")){
 
