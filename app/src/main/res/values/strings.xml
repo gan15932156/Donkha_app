@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Donkha schoolbank</string>
+
+
+    <string-array name="spn_forgot">
+        <item>นักเรียน</item>
+        <item>บุคลากร</item>
+    </string-array>
+
+    <string-array name="spn_action_statement">
+        <item>เลือกรายการ</item>
+        <item>ทั้งหมด</item>
+        <item>ฝาก</item>
+        <item>ถอน</item>
+        <item>โอน</item>
+    </string-array>
+</resources>

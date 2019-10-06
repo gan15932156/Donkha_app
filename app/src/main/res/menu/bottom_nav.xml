@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/nav_home"
+        android:title="หน้าแรก"
+        android:enabled="true"
+        android:icon="@drawable/ic_home_black_24dp"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/nav_statement"
+        android:title="รายการ"
+        android:enabled="true"
+        android:icon="@drawable/ic_assignment_black_24dp"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/nav_me"
+        android:title="ข้อมูลส่วนตัว"
+        android:enabled="true"
+        android:icon="@drawable/ic_account_box_black_24dp"
+        app:showAsAction="ifRoom"/>
+</menu>
