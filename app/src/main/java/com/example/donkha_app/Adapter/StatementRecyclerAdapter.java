@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -45,36 +46,43 @@ public class StatementRecyclerAdapter extends RecyclerView.Adapter<StatementRecy
             action = "ฝาก";
             money = Helper.customFormat("++###,###.###",st.getTrans_money());
             statementViewHoler.txt_money.setTextColor(Color.parseColor("#00b806"));
+            statementViewHoler.img_VIewl.setImageResource(R.drawable.deposit);
         }
         else if(st.getAction().equals("withdraw")){
             action = "ถอน";
             money = Helper.customFormat("--###,###.###",st.getTrans_money());
             statementViewHoler.txt_money.setTextColor(Color.RED);
+            statementViewHoler.img_VIewl.setImageResource(R.drawable.withdraw);
         }
         else if(st.getAction().equals("tranfer_money")){
             action = "โอน";
             money = Helper.customFormat("--###,###.###",st.getTrans_money());
             statementViewHoler.txt_money.setTextColor(Color.RED);
+            statementViewHoler.img_VIewl.setImageResource(R.drawable.withdraw);
         }
         else if(st.getAction().equals("recive_money")){
             action = "รับเงินโอน";
             money = Helper.customFormat("++###,###.###",st.getTrans_money());
             statementViewHoler.txt_money.setTextColor(Color.parseColor("#00b806"));
+            statementViewHoler.img_VIewl.setImageResource(R.drawable.deposit);
         }
         else if(st.getAction().equals("open_account")){
             action = "เปิดบัญชี";
             money = Helper.customFormat("++###,###.###",st.getTrans_money());
             statementViewHoler.txt_money.setTextColor(Color.parseColor("#00b806"));
+            statementViewHoler.img_VIewl.setImageResource(R.drawable.deposit);
         }
         else if(st.getAction().equals("add_interest")){
             action = "เพิ่มดอกเบี้ย";
             money = Helper.customFormat("++###,###.###",st.getTrans_money());
             statementViewHoler.txt_money.setTextColor(Color.parseColor("#00b806"));
+            statementViewHoler.img_VIewl.setImageResource(R.drawable.deposit);
         }
         else{
             action = "โอน";
             money = Helper.customFormat("++###,###.###",st.getTrans_money());
             statementViewHoler.txt_money.setTextColor(Color.parseColor("#00b806"));
+            statementViewHoler.img_VIewl.setImageResource(R.drawable.withdraw);
         }
 
         statementViewHoler.txt_action.setText(action);
@@ -117,10 +125,12 @@ public class StatementRecyclerAdapter extends RecyclerView.Adapter<StatementRecy
 
     public class StatementViewHoler extends RecyclerView.ViewHolder{
         public TextView txt_action,txt_money,txt_date;
+        public ImageView img_VIewl;
         public LinearLayout linearLayout;
         public StatementViewHoler(@NonNull View itemView) {
             super(itemView);
             linearLayout = itemView.findViewById(R.id.linear_recyclerciew);
+            img_VIewl = itemView.findViewById(R.id.recyclervire_statement_img);
             txt_action = itemView.findViewById(R.id.txt_action_recyclerview);
             txt_date = itemView.findViewById(R.id.txt_state_date_recyclerview);
             txt_money = itemView.findViewById(R.id.txt_money_recyclerview);

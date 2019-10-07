@@ -41,7 +41,7 @@ public class StatementFragment extends Fragment {
     private StatementRecyclerAdapter mStatementAdapter;
     private ArrayList<Statement> mStatementList;
     private Context mContext;
-    private TextView txt_account_balance;
+    private TextView txt_account_balance,txt_acount_name,txt_account_code;
     private String account_id;
 
     @Nullable
@@ -57,6 +57,8 @@ public class StatementFragment extends Fragment {
         }
         account_id = PreferenceUtils.getAccount_id(mContext);
         txt_account_balance = view.findViewById(R.id.txt_balance_money);
+        txt_account_code = view.findViewById(R.id.statement_txt_ac_code);
+        txt_acount_name = view.findViewById(R.id.statement_txt_ac_name);
         spn = view.findViewById(R.id.spn_statement_recyclerview);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(mContext, R.array.spn_action_statement, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -148,6 +150,8 @@ public class StatementFragment extends Fragment {
 
                     JSONObject jsonAccount = obj.getJSONObject("account_balance");
                     PreferenceUtils.saveAccount_id(jsonAccount.getString("account_id"),mContext);
+                    txt_account_code.setText("เลขที่บัญชี "+jsonAccount.getString("account_id"));
+                    txt_acount_name.setText("ชื่อบัญชี "+jsonAccount.getString("account_name"));
                     txt_account_balance.setText("ยอดเงินคงเหลือ "+ Helper.customFormat("###,###.###",jsonAccount.getDouble("balance"))+" บาท");
                 }
                 else{
