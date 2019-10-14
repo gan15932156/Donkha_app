@@ -2,6 +2,7 @@ package com.example.donkha_app.Fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -68,7 +69,8 @@ public class HomeFragment extends Fragment {
             show_statement_today(account_id,"http://18.140.49.199/Donkha/Service_app/select_statement_today");
         }
         else{
-            Toast.makeText(mContex, "ไม่สามารถแสดงรายการได้", Toast.LENGTH_SHORT).show();
+            txt.setTextColor(Color.RED);
+            txt.setText("ไม่สามารถแสดงรายการได้");
         }
         btn_tran_request.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,7 +101,8 @@ public class HomeFragment extends Fragment {
                     }
                 }
                 else{
-                    Toast.makeText(mContex, "ไม่สามารถแสดงรายการได้", Toast.LENGTH_SHORT).show();
+                    txt.setTextColor(Color.RED);
+                    txt.setText("ไม่สามารถแสดงรายการได้");
                 }
             }
         });
@@ -125,7 +128,8 @@ public class HomeFragment extends Fragment {
                     }
                 }
                 else{
-                    Toast.makeText(mContex, "ไม่สามารถแสดงรายการได้", Toast.LENGTH_SHORT).show();
+                    txt.setTextColor(Color.RED);
+                    txt.setText("ไม่สามารถแสดงรายการได้");
                 }
             }
         });
@@ -150,7 +154,8 @@ public class HomeFragment extends Fragment {
                     }
                 }
                 else{
-                    Toast.makeText(mContex, "ไม่สามารถแสดงรายการได้", Toast.LENGTH_SHORT).show();
+                    txt.setTextColor(Color.RED);
+                    txt.setText("ไม่สามารถแสดงรายการได้");
                 }
             }
         });
