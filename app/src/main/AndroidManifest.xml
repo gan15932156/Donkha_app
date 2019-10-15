@@ -16,7 +16,8 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="UnusedAttribute">
-        <activity android:name=".WithdrawActivity"></activity>
+        <activity android:name=".TranferMoneyActivity"></activity>
+        <activity android:name=".WithdrawActivity" />
         <activity android:name=".DepositActivity" />
         <activity android:name=".Qr_code_scan" />
         <activity android:name=".MainUser" />

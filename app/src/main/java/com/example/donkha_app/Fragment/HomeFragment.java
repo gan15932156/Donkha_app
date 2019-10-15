@@ -30,6 +30,7 @@ import com.example.donkha_app.Helper.WebSevConnect;
 import com.example.donkha_app.MainActivity;
 import com.example.donkha_app.MainUser;
 import com.example.donkha_app.R;
+import com.example.donkha_app.TranferMoneyActivity;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -75,8 +76,7 @@ public class HomeFragment extends Fragment {
         btn_tran_request.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                //startActivity(new Intent(mContex,TranferActivity.class));
+                startActivity(new Intent(mContex, TranferMoneyActivity.class));
             }
         });
         btn_tran.setOnClickListener(new View.OnClickListener() {
@@ -85,6 +85,7 @@ public class HomeFragment extends Fragment {
                 if (account_id != null) {
                     if(btn_tranfer_status){
                         mRecycerView.setAdapter(null);
+                        txt.setTextColor(getResources().getColor(R.color.black));
                         txt.setText("รายการรายวัน");
                         statementRecyclerAdapter = new StatementRecyclerAdapter(mContex,arraylist_today);
                         mRecycerView.setAdapter(statementRecyclerAdapter);
@@ -92,8 +93,6 @@ public class HomeFragment extends Fragment {
                     }
                     else{
                         mRecycerView.setAdapter(null);
-                        txt.setText("รายการโอนรายวัน");
-
                         show_tranfer_today(account_id,"http://18.140.49.199/Donkha/Service_app/select_tranfer_today");
                         btn_tranfer_status = true ;
                         btn_deposit_status = false;
@@ -112,6 +111,7 @@ public class HomeFragment extends Fragment {
                 if (account_id != null) {
                     if(btn_withdraw_status){
                         mRecycerView.setAdapter(null);
+                        txt.setTextColor(getResources().getColor(R.color.black));
                         txt.setText("รายการรายวัน");
                         statementRecyclerAdapter = new StatementRecyclerAdapter(mContex,arraylist_today);
                         mRecycerView.setAdapter(statementRecyclerAdapter);
@@ -119,8 +119,6 @@ public class HomeFragment extends Fragment {
                     }
                     else{
                         mRecycerView.setAdapter(null);
-                        txt.setText("รายการถอนรายวัน");
-
                         show_withdraw_today(account_id,"http://18.140.49.199/Donkha/Service_app/select_withdraw_today");
                         btn_withdraw_status = true;
                         btn_deposit_status = false;
@@ -139,6 +137,7 @@ public class HomeFragment extends Fragment {
                 if(account_id != null){
                     if(btn_deposit_status){
                         mRecycerView.setAdapter(null);
+                        txt.setTextColor(getResources().getColor(R.color.black));
                         txt.setText("รายการรายวัน");
                         statementRecyclerAdapter = new StatementRecyclerAdapter(mContex,arraylist_today);
                         mRecycerView.setAdapter(statementRecyclerAdapter);
@@ -146,7 +145,6 @@ public class HomeFragment extends Fragment {
                     }
                     else{
                         mRecycerView.setAdapter(null);
-                        txt.setText("รายการฝากรายวัน");
                         show_deposit_today(account_id,"http://18.140.49.199/Donkha/Service_app/select_deposit_today");
                         btn_deposit_status = true ;
                         btn_withdraw_status = false;
@@ -188,6 +186,7 @@ public class HomeFragment extends Fragment {
         try {
             JSONObject obj = new JSONObject(response);
             if(!obj.getBoolean("error")){
+                txt.setText("รายการฝากรายวัน");
                 JSONArray jsonArraySt = obj.getJSONArray("statement");
                 for(int i = 0 ; i < jsonArraySt.length();i++){
                     JSONObject st = jsonArraySt.getJSONObject(i);
@@ -208,7 +207,9 @@ public class HomeFragment extends Fragment {
                 mRecycerView.setAdapter(statementRecyclerAdapter);
             }
             else{
-                Toast.makeText(mContex, obj.getString("message"), Toast.LENGTH_SHORT).show();
+                txt.setTextColor(Color.RED);
+                txt.setText("ไม่สามารถแสดงรายการได้");
+                //Toast.makeText(mContex, obj.getString("message"), Toast.LENGTH_SHORT).show();
             }
         }
         catch (JSONException e) {
@@ -225,6 +226,7 @@ public class HomeFragment extends Fragment {
             JSONObject obj = new JSONObject(response);
             if(!obj.getBoolean("error")){
                 JSONArray jsonArraySt = obj.getJSONArray("statement");
+                txt.setText("รายการถอนรายวัน");
                 for(int i = 0 ; i < jsonArraySt.length();i++){
                     JSONObject st = jsonArraySt.getJSONObject(i);
                     arrayList_selected.add(new Statement(
@@ -244,7 +246,9 @@ public class HomeFragment extends Fragment {
                 mRecycerView.setAdapter(statementRecyclerAdapter);
             }
             else{
-                Toast.makeText(mContex, obj.getString("message"), Toast.LENGTH_SHORT).show();
+                txt.setTextColor(Color.RED);
+                txt.setText("ไม่สามารถแสดงรายการได้");
+                //Toast.makeText(mContex, obj.getString("message"), Toast.LENGTH_SHORT).show();
             }
         }
         catch (JSONException e) {
@@ -260,6 +264,7 @@ public class HomeFragment extends Fragment {
         try {
             JSONObject obj = new JSONObject(response);
             if(!obj.getBoolean("error")){
+                txt.setText("รายการโอนรายวัน");
                 JSONArray jsonArraySt = obj.getJSONArray("statement");
                 for(int i = 0 ; i < jsonArraySt.length();i++){
                     JSONObject st = jsonArraySt.getJSONObject(i);
@@ -280,7 +285,9 @@ public class HomeFragment extends Fragment {
                 mRecycerView.setAdapter(statementRecyclerAdapter);
             }
             else{
-                Toast.makeText(mContex, obj.getString("message"), Toast.LENGTH_SHORT).show();
+                txt.setTextColor(Color.RED);
+                txt.setText("ไม่สามารถแสดงรายการได้");
+                //Toast.makeText(mContex, obj.getString("message"), Toast.LENGTH_SHORT).show();
             }
         }
         catch (JSONException e) {
@@ -316,7 +323,9 @@ public class HomeFragment extends Fragment {
                 mRecycerView.setAdapter(statementRecyclerAdapter);
             }
             else{
-                Toast.makeText(mContex, obj.getString("message"), Toast.LENGTH_SHORT).show();
+                txt.setTextColor(Color.RED);
+                txt.setText("ไม่สามารถแสดงรายการได้");
+                //Toast.makeText(mContex, obj.getString("message"), Toast.LENGTH_SHORT).show();
             }
         }
         catch (JSONException e) {

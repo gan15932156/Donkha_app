@@ -36,7 +36,8 @@ public class Qr_code_scan extends AppCompatActivity implements ZXingScannerView.
             startActivity(new Intent(Qr_code_scan.this,WithdrawActivity.class));
         }
         else if(resultt.equals("tranfer_money")){
-
+            this.finishAffinity();
+            startActivity(new Intent(Qr_code_scan.this,TranferMoneyActivity.class));
         }
         else{
             Toast.makeText(this, "QR code ผิดพลาด กรุณาสแกนใหม่", Toast.LENGTH_SHORT).show();
