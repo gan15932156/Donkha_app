@@ -40,6 +40,7 @@ public class StatementFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private StatementRecyclerAdapter mStatementAdapter;
     private ArrayList<Statement> mStatementList;
+    private ArrayList<Statement> array_list_selected;
     private Context mContext;
     private TextView txt_account_balance,txt_acount_name,txt_account_code;
     private String account_id;
@@ -47,14 +48,46 @@ public class StatementFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mContext = getContext();
+
         PreferenceUtils utils = new PreferenceUtils();
         View view = inflater.inflate(R.layout.fregment_statement, container, false);
-        if (utils.getUsername(mContext) == null){
+        if (utils.getUsername(getContext()) == null){
             Intent intent = new Intent(mContext, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         }
+        init(view);
+
+        request_statement();
+        setAccount_balance();
+        spn.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String action = spn.getSelectedItem().toString();
+                mRecyclerView.setAdapter(null);
+
+                if(action.equals("ทั้งหมด")){
+                    mStatementAdapter = new StatementRecyclerAdapter(mContext,mStatementList);
+                    mRecyclerView.setAdapter(mStatementAdapter);
+                }
+                else if(action.equals("ฝาก")){
+                    getShow_Filter("deposit");
+
+                }
+                else if(action.equals("ถอน")){
+                    getShow_Filter("withdraw");
+                }
+                else{
+                    getShow_Filter("tranfer_money");
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) { }
+        });
+        return view;
+    }
+    private void init(View view){
+        mContext = getContext();
         account_id = PreferenceUtils.getAccount_id(mContext);
         txt_account_balance = view.findViewById(R.id.txt_balance_money);
         txt_account_code = view.findViewById(R.id.statement_txt_ac_code);
@@ -67,30 +100,9 @@ public class StatementFragment extends Fragment {
         mRecyclerView = view.findViewById(R.id.statement_recycler_view_horizontal);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+
         mStatementList = new ArrayList<>();
-
-        request_statement();
-        setAccount_balance();
-        spn.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String action = spn.getSelectedItem().toString();
-                if(!action.equals("เลือกรายการ")){
-                    mRecyclerView.setAdapter(null);
-                    mStatementList.clear();
-
-                    String action_request ;
-                    if(action.equals("ทั้งหมด")){ action_request = "all"; }
-                    else if(action.equals("ฝาก")){ action_request = "deposit"; }
-                    else if(action.equals("ถอน")){ action_request = "withdraw"; }
-                    else{ action_request = "tranfer_money"; }
-                    getShow_Filter(action_request);
-                }
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
-        });
-        return view;
+        array_list_selected = new ArrayList<>();
     }
     public void getShow_Filter(String action){
         String url = "http://18.140.49.199/Donkha/Service_app/get_filter_statement";
@@ -101,13 +113,14 @@ public class StatementFragment extends Fragment {
             params.add(new BasicNameValuePair("action", action));
             String response = WebSevConnect.getHttpPost(url,params,mContext);
             try {
+                array_list_selected.clear();
                 JSONObject obj = new JSONObject(response);
                 if(!obj.getBoolean("error")){
 
                     JSONArray jsonArraySt = obj.getJSONArray("statement");
                     for(int i = 0 ; i < jsonArraySt.length();i++){
                         JSONObject st = jsonArraySt.getJSONObject(i);
-                        mStatementList.add(new Statement(
+                        array_list_selected.add(new Statement(
                                 st.getString("account_id"),
                                 st.getString("trans_id"),
                                 st.getString("account_id"),
@@ -120,7 +133,7 @@ public class StatementFragment extends Fragment {
                                 st.getString("account_id_tranfer")
                         ));
                     }
-                    mStatementAdapter = new StatementRecyclerAdapter(mContext,mStatementList);
+                    mStatementAdapter = new StatementRecyclerAdapter(mContext,array_list_selected);
                     mRecyclerView.setAdapter(mStatementAdapter);
                 }
                 else{

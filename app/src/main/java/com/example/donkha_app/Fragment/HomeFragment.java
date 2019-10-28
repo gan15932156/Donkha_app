@@ -16,21 +16,12 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.work.Data;
-import androidx.work.OneTimeWorkRequest;
-import androidx.work.WorkManager;
-
 import com.example.donkha_app.Adapter.StatementRecyclerAdapter;
-import com.example.donkha_app.DepositActivity;
 import com.example.donkha_app.GetterSetter.PreferenceUtils;
 import com.example.donkha_app.GetterSetter.Statement;
-import com.example.donkha_app.Helper.Constants;
-import com.example.donkha_app.Helper.MyWork;
 import com.example.donkha_app.Helper.WebSevConnect;
 import com.example.donkha_app.MainActivity;
-import com.example.donkha_app.MainUser;
 import com.example.donkha_app.R;
-import com.example.donkha_app.TranferMoneyActivity;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -40,11 +31,10 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class HomeFragment extends Fragment {
     private TextView txt;
-    private Button btn_deposit,btn_withdraw,btn_tran,btn_tran_request;
+    private Button btn_deposit,btn_withdraw,btn_tran;
     private RecyclerView mRecycerView;
     private StatementRecyclerAdapter statementRecyclerAdapter;
 
@@ -73,12 +63,6 @@ public class HomeFragment extends Fragment {
             txt.setTextColor(Color.RED);
             txt.setText("ไม่สามารถแสดงรายการได้");
         }
-        btn_tran_request.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(mContex, TranferMoneyActivity.class));
-            }
-        });
         btn_tran.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -172,7 +156,6 @@ public class HomeFragment extends Fragment {
         btn_deposit = view.findViewById(R.id.home_btn_deposit);
         btn_withdraw = view.findViewById(R.id.home_btn_withdraw);
         btn_tran = view.findViewById(R.id.home_btn_tranfer_money);
-        btn_tran_request = view.findViewById(R.id.home_btn_tranfer_money_request);
         mRecycerView = view.findViewById(R.id.home_recyclerview);
         mRecycerView.setHasFixedSize(true);
         mRecycerView.setLayoutManager(new LinearLayoutManager(mContex));

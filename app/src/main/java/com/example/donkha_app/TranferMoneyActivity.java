@@ -1,12 +1,15 @@
 package com.example.donkha_app;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.TextInputEditText;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -64,7 +67,24 @@ public class TranferMoneyActivity extends AppCompatActivity {
                         !txt_ac_code.getText().toString().isEmpty() &&
                         !txt_ac_name.getText().toString().isEmpty() &&
                         !auto_ac_code.getText().toString().isEmpty()){
-                    insert_tranfer_money();
+
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                        builder.setCancelable(false);
+                        builder.setMessage("กรุณาตรวจสอบข้อมูลก่อนส่ง");
+                        builder.setPositiveButton("ยืนยัน", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                insert_tranfer_money();
+                                //Toast.makeText(mContext, txt_tranfer_money.getText()+" "+txt_total_money.getText(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        builder.setNegativeButton("ยกเลิก", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) { }
+                        });
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
                 }
                 else{
                     Toast.makeText(mContext, "ไม่สามารถทำรายการได้", Toast.LENGTH_SHORT).show();
@@ -222,7 +242,7 @@ public class TranferMoneyActivity extends AppCompatActivity {
             if(!obj.getBoolean("error")){
                 Toast.makeText(mContext, obj.getString("message"), Toast.LENGTH_LONG).show();
 
-                Data data = new Data.Builder()
+              /*  Data data = new Data.Builder()
                         .putString(Constants.KEY_SERVICE_ACCOUNT_ID, PreferenceUtils.getAccount_id(mContext))
                         .build();
 
@@ -230,13 +250,14 @@ public class TranferMoneyActivity extends AppCompatActivity {
                         setInitialDelay(2, TimeUnit.SECONDS).
                         setInputData(data).
                         addTag("check").build();
-                WorkManager.getInstance().enqueue(check);
+                WorkManager.getInstance().enqueue(check);*/
 
                 this.finishAffinity();
                 startActivity(new Intent(mContext,MainUser.class));
             }
             else{
                 Toast.makeText(mContext, obj.getString("message"), Toast.LENGTH_SHORT).show();
+                Log.d("tagggggg",obj.getString("message"));
             }
         }
         catch (JSONException e) {

@@ -55,6 +55,9 @@ public class MainUser extends AppCompatActivity {
             case R.id.scan_qr_code:
                 startActivity(new Intent(this, Qr_code_scan.class));
                 return true;
+            case R.id.main_user_tranfer_money:
+                startActivity(new Intent(this,TranferMoneyActivity.class));
+                return true;
         }
         return  super.onOptionsItemSelected(item);
     }

@@ -8,7 +8,6 @@
     </string-array>
 
     <string-array name="spn_action_statement">
-        <item>เลือกรายการ</item>
         <item>ทั้งหมด</item>
         <item>ฝาก</item>
         <item>ถอน</item>
