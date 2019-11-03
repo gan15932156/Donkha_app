@@ -74,7 +74,7 @@ public class PreferenceUtils {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor prefsEditor = prefs.edit();
         prefsEditor.putStringSet(Constants.KEY_TRAN_ID, set);
-        prefsEditor.apply();
+        prefsEditor.commit();
         return true;
     }
 

@@ -155,6 +155,11 @@ public class MyWork extends Worker {
                 prefsEditor.remove(Constants.KEY_TRAN_ID);
                 prefsEditor.commit();
 
+                /* Apply เป็นการบันทึกข้อมูลแบบ Asynchronous โดยไม่สนใจว่าข้อมูลบันทึกได้สำเร็จหรือไม่
+
+                Commit เป็นการบันทึกข้อมูลแบบ Synchronous ซึ่งจะสามารถรู้ได้ว่าข้อมูลบันทึกสำเร็จหรือป่าว */
+
+
                 PreferenceUtils.saveTran_id(newset,getApplicationContext());
                 Log.d("SUCESSSSSSSSSSSS",newset.toString());
                 ShowNotification("ได้รับการโอนเงินจากบัญชี "+jsonAccount.getString("account_id_tranfer"),"จำนวนเงิน "+jsonAccount.getString("trans_money")+" บาท");
