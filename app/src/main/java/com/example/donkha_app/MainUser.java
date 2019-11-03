@@ -8,13 +8,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.donkha_app.Fragment.HomeFragment;
 import com.example.donkha_app.Fragment.MeFragment;
 import com.example.donkha_app.Fragment.StatementFragment;
+import com.example.donkha_app.Helper.MyJobIntentService;
 
 public class MainUser extends AppCompatActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,10 +24,16 @@ public class MainUser extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav);
         bottomNavigationView.setOnNavigationItemSelectedListener(navListener);
 
+       /* Intent mIntent = new Intent(this, MyJobIntentService.class);
+        mIntent.putExtra("maxCountValue", 10);
+        MyJobIntentService.enqueueWork(this, mIntent);*/
+
         Fragment fragment = new HomeFragment();
 
         getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout,fragment).commit();
     }
+
+
     private BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {

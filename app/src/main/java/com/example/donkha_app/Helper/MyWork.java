@@ -40,12 +40,15 @@ public class MyWork extends Worker {
     @Override
     public Result doWork() {
         account_id = getInputData().getString(Constants.KEY_SERVICE_ACCOUNT_ID);
-        check_statement_confirm(account_id);
+        boolean relll =  check_statement_confirm(account_id);
+        if(relll){
+            return Result.SUCCESS;
+        }
+        else{
+            return Result.RETRY;
+        }
 
-        return Result.SUCCESS;
     }
-
-
     private void StartNewRequest(String account_id)
     {
         Data data = new Data.Builder()
@@ -58,8 +61,9 @@ public class MyWork extends Worker {
                 addTag("re_check").build();
         WorkManager.getInstance().enqueue(re_check);
     }
-    private void check_statement_confirm(String account_id){
+    private Boolean check_statement_confirm(String account_id){
         String url = "http://18.140.49.199/Donkha/Service_app/check_statement_confirm";
+        Boolean rel = false;
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("account_id",account_id));
 
@@ -69,16 +73,20 @@ public class MyWork extends Worker {
             if(obj.getString("relsult_check").equals("0")){
                 Log.d("FAILLLLLLLLLL","fail");
                 StartNewRequest(account_id);
+                rel = false;
             }
             else{
+                Log.d("SUCESSSSSSSSSSSS","SUCCESSSSSSSSSSS");
                 JSONObject jsonAccount = obj.getJSONObject("account");
                 ShowNotification("ยืนยันรายการสำเร็จ","ยืนยันรายการเลขที่ธุรกรรม "+jsonAccount.getString("trans_id"));
                 WorkManager.getInstance().cancelAllWork();
+                rel = true;
             }
         }
         catch (JSONException e) {
             Log.d("ERROR",e.getMessage());
         }
+        return rel;
     }
 
     @SuppressLint("WrongConstant")
