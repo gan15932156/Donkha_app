@@ -7,4 +7,7 @@ public class Constants {
     public static String KEY_ACCOUNT_ID = "account_id";
     public static String KEY_SERVICE_ACCOUNT_ID = "account_id";
     public static String KEY_SERVICE_ACTION = "action";
+    public static String KEY_START_SERVICE = "start_service";
+
+    public static String KEY_TRAN_ID = "tran_id";
 }

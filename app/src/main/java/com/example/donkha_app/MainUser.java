@@ -1,6 +1,8 @@
 package com.example.donkha_app;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -8,12 +10,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
+
+import androidx.work.Data;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
 
 import com.example.donkha_app.Fragment.HomeFragment;
 import com.example.donkha_app.Fragment.MeFragment;
 import com.example.donkha_app.Fragment.StatementFragment;
-import com.example.donkha_app.Helper.MyJobIntentService;
+import com.example.donkha_app.GetterSetter.PreferenceUtils;
+import com.example.donkha_app.Helper.Constants;
+import com.example.donkha_app.Helper.MyWork;
+
+import java.util.HashSet;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 public class MainUser extends AppCompatActivity {
     @Override
@@ -24,9 +35,22 @@ public class MainUser extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav);
         bottomNavigationView.setOnNavigationItemSelectedListener(navListener);
 
-       /* Intent mIntent = new Intent(this, MyJobIntentService.class);
-        mIntent.putExtra("maxCountValue", 10);
-        MyJobIntentService.enqueueWork(this, mIntent);*/
+        Data data = new Data.Builder()
+                .putString(Constants.KEY_START_SERVICE,"check_tranfer_money")
+                .putString(Constants.KEY_SERVICE_ACCOUNT_ID, PreferenceUtils.getAccount_id(MainUser.this))
+                .build();
+
+        final OneTimeWorkRequest check = new OneTimeWorkRequest.Builder(MyWork.class).
+                setInitialDelay(2, TimeUnit.SECONDS).
+                setInputData(data).
+                addTag("check_tranfer_money").build();
+        WorkManager.getInstance().enqueue(check);
+
+       /* SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor prefsEditor = prefs.edit();
+        prefsEditor.remove(Constants.KEY_TRAN_ID);
+        prefsEditor.commit();*/
+
 
         Fragment fragment = new HomeFragment();
 

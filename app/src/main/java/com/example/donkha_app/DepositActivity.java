@@ -115,13 +115,14 @@ public class DepositActivity extends AppCompatActivity {
                 Toast.makeText(DepositActivity.this, obj.getString("message"), Toast.LENGTH_LONG).show();
 
                 Data data = new Data.Builder()
+                        .putString(Constants.KEY_START_SERVICE,"check_statement")
                         .putString(Constants.KEY_SERVICE_ACCOUNT_ID, PreferenceUtils.getAccount_id(DepositActivity.this))
                         .build();
 
                 final OneTimeWorkRequest check = new OneTimeWorkRequest.Builder(MyWork.class).
                         setInitialDelay(2, TimeUnit.SECONDS).
                         setInputData(data).
-                        addTag("check").build();
+                        addTag("check_statement").build();
                 WorkManager.getInstance().enqueue(check);
 
                 this.finishAffinity();

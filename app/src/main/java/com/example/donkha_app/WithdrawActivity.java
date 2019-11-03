@@ -115,6 +115,7 @@ public class WithdrawActivity extends AppCompatActivity {
                 Toast.makeText(mContext, obj.getString("message"), Toast.LENGTH_LONG).show();
 
                 Data data = new Data.Builder()
+                        .putString(Constants.KEY_START_SERVICE,"check_statement")
                         .putString(Constants.KEY_SERVICE_ACCOUNT_ID, PreferenceUtils.getAccount_id(mContext))
                         .build();
 

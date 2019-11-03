@@ -3,8 +3,17 @@ package com.example.donkha_app.GetterSetter;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import com.example.donkha_app.Helper.Constants;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class PreferenceUtils {
     public PreferenceUtils(){ }
@@ -59,4 +68,24 @@ public class PreferenceUtils {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         return prefs.getString(Constants.KEY_ACCOUNT_ID, null);
     }
+
+    public static boolean saveTran_id(Set<String> set, Context context) {
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor prefsEditor = prefs.edit();
+        prefsEditor.putStringSet(Constants.KEY_TRAN_ID, set);
+        prefsEditor.apply();
+        return true;
+    }
+
+    public static Set<String> getTran_id(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        Set<String> nullString = new HashSet<>();
+        nullString.add("nullString");
+        Set<String> fetch = prefs.getStringSet(Constants.KEY_TRAN_ID,nullString);
+        return fetch;
+
+    }
+
+
 }

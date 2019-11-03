@@ -242,16 +242,6 @@ public class TranferMoneyActivity extends AppCompatActivity {
             if(!obj.getBoolean("error")){
                 Toast.makeText(mContext, obj.getString("message"), Toast.LENGTH_LONG).show();
 
-              /*  Data data = new Data.Builder()
-                        .putString(Constants.KEY_SERVICE_ACCOUNT_ID, PreferenceUtils.getAccount_id(mContext))
-                        .build();
-
-                final OneTimeWorkRequest check = new OneTimeWorkRequest.Builder(MyWork.class).
-                        setInitialDelay(2, TimeUnit.SECONDS).
-                        setInputData(data).
-                        addTag("check").build();
-                WorkManager.getInstance().enqueue(check);*/
-
                 this.finishAffinity();
                 startActivity(new Intent(mContext,MainUser.class));
             }
